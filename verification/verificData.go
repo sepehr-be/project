@@ -1,10 +1,14 @@
 package verification
 
-import "strings"
+import (
+	"strconv"
+	"strings"
+)
 
 // تابع برای اعتبارسنجی داده‌ها
-func VerificationData(FirstName, LastName, Email, NationalID string, TicketCount int) []string {
+func VerificationData(FirstName, LastName, Email string, NationalID, TicketCount int) []string {
 	var errors []string
+	num := strconv.Itoa(NationalID)
 
 	// بررسی اعتبار نام‌ها
 	if len(FirstName) < 4 || len(LastName) < 4 {
@@ -12,7 +16,7 @@ func VerificationData(FirstName, LastName, Email, NationalID string, TicketCount
 	}
 
 	// بررسی شماره ملی
-	if len(NationalID) != 8 {
+	if len(num) != 8 {
 		errors = append(errors, "National ID must be exactly 8 characters.")
 	}
 

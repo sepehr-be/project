@@ -8,4 +8,5 @@ import (
 func ReservationRoots() {
 	http.HandleFunc("/", service.WelcomHandler)
 	http.HandleFunc("/reserve", service.ReservationHandler)
+	http.HandleFunc("/get/reserve", service.SingleReservation)
 }

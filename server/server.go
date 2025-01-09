@@ -7,6 +7,6 @@ import (
 )
 
 func Server(port string) {
-	fmt.Printf("Server is running on http://localhost:%s", port)
+	fmt.Printf("Server is running on http://localhost:%s \n", port)
 	log.Fatal(http.ListenAndServe(":"+port, nil))
 }
