@@ -1,12 +1,11 @@
 package router
 
 import (
-	"apiTest/server/service"
+	"apiTest/server/handler"
 	"net/http"
 )
-
 func ReservationRoots() {
-	http.HandleFunc("/", service.WelcomHandler)
-	http.HandleFunc("/reserve", service.ReservationHandler)
-	http.HandleFunc("/get/reserve", service.SingleReservation)
+	http.HandleFunc("/", handler.WelcomHandler)
+	http.HandleFunc("/reserve", handler.ReservationHandler)
+	http.HandleFunc("/get/reserve", handler.SingleReservation)
 }
