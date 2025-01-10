@@ -60,7 +60,6 @@ func (h *Handlers) UpdateReservation(w http.ResponseWriter, r *http.Request) {
 	num := r.URL.Query().Get("national_id")
 	id, err := strconv.Atoi(num)
 	if err != nil {
-		fmt.Println("error:", err)
 		return
 	}
 
@@ -78,7 +77,6 @@ func (h *Handlers) DeleteReservation(w http.ResponseWriter, r *http.Request) {
 	num := r.URL.Query().Get("national_id")
 	id, err := strconv.Atoi(num)
 	if err != nil {
-		fmt.Println("error:", err)
 		return
 	}
 	if err := h.Repo.Delete(id); err != nil {
@@ -94,7 +92,6 @@ func (h *Handlers) FindById(w http.ResponseWriter, r *http.Request) {
 	num := r.URL.Query().Get("national_id")
 	id, err := strconv.Atoi(num)
 	if err != nil {
-		fmt.Println("error:", err)
 		return
 	}
 	reservation, err := h.Repo.FindById(id)
