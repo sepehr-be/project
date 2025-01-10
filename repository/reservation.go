@@ -12,14 +12,4 @@ type ReservationInterface interface {
 	}
 
 	
-var repoInstance *cache.ReservationRepository
 
-
-func GetReservationRepository() *cache.ReservationRepository {
-    if repoInstance == nil {
-        repoInstance = &cache.ReservationRepository{
-            Data: make(map[int]cache.Reservation),
-        }
-    }
-    return repoInstance
-}

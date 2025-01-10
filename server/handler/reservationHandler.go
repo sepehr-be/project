@@ -1,14 +1,15 @@
 package handler
 
 import (
-	"apiTest/repository"
 	"fmt"
 	"net/http"
 )
 
-func ReservationHandler(w http.ResponseWriter, r *http.Request) {
-    repo := repository.GetReservationRepository() 
-    handlers := NewHandlers(repo)
+
+
+func (h Handlers) ReservationHandler(w http.ResponseWriter, r *http.Request) {
+    
+    handlers := NewHandlers(h.Repo)
 
     switch r.Method {
     case http.MethodPost:
@@ -24,13 +25,13 @@ func ReservationHandler(w http.ResponseWriter, r *http.Request) {
     }
 }
 
-func WelcomHandler(response http.ResponseWriter, request *http.Request) {
+func (h Handlers) WelcomHandler(response http.ResponseWriter, request *http.Request) {
     fmt.Fprintf(response, "Please send data to '/reserve' for reservation.")
 }
 
-func SingleReservation(w http.ResponseWriter, r *http.Request) {
-    repo := repository.GetReservationRepository()
-    handlers := NewHandlers(repo)
+func (h Handlers) SingleReservation(w http.ResponseWriter, r *http.Request) {
+
+    handlers := NewHandlers(h.Repo)
 
     switch r.Method {
     case http.MethodGet:
