@@ -1,0 +1,7 @@
+app:
+  name: Api
+  version: 1.0.0
+
+server:
+  port: 4000
+  host: localhost

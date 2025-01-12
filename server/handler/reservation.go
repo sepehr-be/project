@@ -13,6 +13,36 @@ type Handlers struct {
 	Repo repository.ReservationInterface
 }
 
+func (h Handlers) ReservationHandler(w http.ResponseWriter, r *http.Request) {
+
+	handlers := NewHandlers(h.Repo)
+
+	switch r.Method {
+	case http.MethodPost:
+		handlers.CreateReservation(w, r)
+	case http.MethodGet:
+		handlers.GetReservations(w, r)
+	case http.MethodDelete:
+		handlers.DeleteReservation(w, r)
+	case http.MethodPut:
+		handlers.UpdateReservation(w, r)
+	default:
+		http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
+	}
+}
+
+
+func (h Handlers) SingleReservation(w http.ResponseWriter, r *http.Request) {
+
+	handlers := NewHandlers(h.Repo)
+
+	switch r.Method {
+	case http.MethodGet:
+		handlers.FindById(w, r)
+	default:
+		http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
+	}
+}
 
 func NewHandlers(repo repository.ReservationInterface) *Handlers {
 	return &Handlers{Repo: repo}
@@ -49,7 +79,6 @@ func (h *Handlers) CreateReservation(w http.ResponseWriter, r *http.Request) {
 
 }
 
-
 func (h *Handlers) UpdateReservation(w http.ResponseWriter, r *http.Request) {
 
 	var reservation cache.Reservation
@@ -68,10 +97,9 @@ func (h *Handlers) UpdateReservation(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, "reservation with id %d updated",id)
+	fmt.Fprintf(w, "reservation with id %d updated", id)
 
 }
-
 
 func (h *Handlers) DeleteReservation(w http.ResponseWriter, r *http.Request) {
 	num := r.URL.Query().Get("national_id")
@@ -86,7 +114,6 @@ func (h *Handlers) DeleteReservation(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	fmt.Fprintf(w, "reservation with id %d deleted", id)
 }
-
 
 func (h *Handlers) FindById(w http.ResponseWriter, r *http.Request) {
 	num := r.URL.Query().Get("national_id")

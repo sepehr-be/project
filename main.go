@@ -3,11 +3,15 @@ package main
 import (
 	"apiTest/config"
 	"apiTest/server"
+	"log"
 )
 
 func main() {
 
-	port := config.ConfingApi()
+	cfg,err := config.LoadConfig(".")
+	if err != nil {
+		log.Fatalf("Failed to load config %v " , err)
+	}
 
-	server.Server(port)
+	server.Server(cfg.Server.Port)
 }

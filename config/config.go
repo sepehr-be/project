@@ -1,36 +1,42 @@
 package config
 
 import (
-	"bufio"
-	"fmt"
 	"log"
-	"os"
-	"strings"
+	"github.com/spf13/viper"
 )
 
-func ConfingApi() string {
-	file, err := os.Open(".env")
+type Config struct {
+	App    AppConfig    `mapstructure:"app"`
+	Server ServerConfig `mapstructure:"server"`
+}
+
+type AppConfig struct {
+	Name    string `mapstructure:"name"`
+	Version string `mapstructure:"version"`
+}
+
+type ServerConfig struct {
+	Port string    `mapstructure:"port"`
+	Host string `mapstructure:"host"`
+}
+
+func LoadConfig(path string) (*Config, error) {
+	viper.SetConfigName("config")
+	viper.AddConfigPath(path)
+	viper.SetConfigType("yaml")
+
+	viper.AutomaticEnv()
+
+	err := viper.ReadInConfig()
 	if err != nil {
-		log.Fatal("Error opening .env file:", err)
+		log.Fatalf("Error unmarshaling config, %s",err)
+		return nil,err
 	}
-	defer file.Close()
-
-	var port string
-
-	scanner := bufio.NewScanner(file)
-	for scanner.Scan() {
-		line := scanner.Text()
-
-		if strings.HasPrefix(line, "PORT=") {
-			port = strings.TrimPrefix(line, "PORT=")
-			break
-		}
+	var config Config
+	err = viper.Unmarshal(&config)
+	if err != nil {
+		log.Fatalf("Error unmarshaling config , %s",err)
+		return nil,err
 	}
-
-	if port == "" {
-		log.Fatal("PORT is not set in the .env file")
-	}
-
-	fmt.Println(port)
-	return port
+	return &config,nil
 }
