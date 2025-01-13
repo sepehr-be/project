@@ -9,11 +9,11 @@ import (
 	"strconv"
 )
 
-type Handlers struct {
+type ReservationHandler struct {
 	Repo repository.ReservationInterface
 }
 
-func (h Handlers) ReservationHandler(w http.ResponseWriter, r *http.Request) {
+func (h ReservationHandler) ReservationMetodHandler(w http.ResponseWriter, r *http.Request) {
 
 	handlers := NewHandlers(h.Repo)
 
@@ -32,7 +32,7 @@ func (h Handlers) ReservationHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 
-func (h Handlers) SingleReservation(w http.ResponseWriter, r *http.Request) {
+func (h ReservationHandler) SingleReservation(w http.ResponseWriter, r *http.Request) {
 
 	handlers := NewHandlers(h.Repo)
 
@@ -44,11 +44,11 @@ func (h Handlers) SingleReservation(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func NewHandlers(repo repository.ReservationInterface) *Handlers {
-	return &Handlers{Repo: repo}
+func NewHandlers(repo repository.ReservationInterface) *ReservationHandler {
+	return &ReservationHandler{Repo: repo}
 }
 
-func (h *Handlers) GetReservations(w http.ResponseWriter, r *http.Request) {
+func (h *ReservationHandler) GetReservations(w http.ResponseWriter, r *http.Request) {
 	reservation, err := h.Repo.Get()
 	if err != nil {
 		http.Error(w, "Error retrieving reservations", http.StatusInternalServerError)
@@ -61,7 +61,7 @@ func (h *Handlers) GetReservations(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (h *Handlers) CreateReservation(w http.ResponseWriter, r *http.Request) {
+func (h *ReservationHandler) CreateReservation(w http.ResponseWriter, r *http.Request) {
 	var reservation cache.Reservation
 	err := json.NewDecoder(r.Body).Decode(&reservation)
 	if err != nil {
@@ -79,7 +79,7 @@ func (h *Handlers) CreateReservation(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func (h *Handlers) UpdateReservation(w http.ResponseWriter, r *http.Request) {
+func (h *ReservationHandler) UpdateReservation(w http.ResponseWriter, r *http.Request) {
 
 	var reservation cache.Reservation
 	if err := json.NewDecoder(r.Body).Decode(&reservation); err != nil {
@@ -101,7 +101,7 @@ func (h *Handlers) UpdateReservation(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func (h *Handlers) DeleteReservation(w http.ResponseWriter, r *http.Request) {
+func (h *ReservationHandler) DeleteReservation(w http.ResponseWriter, r *http.Request) {
 	num := r.URL.Query().Get("national_id")
 	id, err := strconv.Atoi(num)
 	if err != nil {
@@ -115,7 +115,7 @@ func (h *Handlers) DeleteReservation(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "reservation with id %d deleted", id)
 }
 
-func (h *Handlers) FindById(w http.ResponseWriter, r *http.Request) {
+func (h *ReservationHandler) FindById(w http.ResponseWriter, r *http.Request) {
 	num := r.URL.Query().Get("national_id")
 	id, err := strconv.Atoi(num)
 	if err != nil {
