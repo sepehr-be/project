@@ -10,6 +10,7 @@ type Reservation struct {
 	TicketCount int    `json:"ticket_count"`
 }
 
+
 type ReservationRepository struct {
 	Data map[int]Reservation
 }
