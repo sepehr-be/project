@@ -41,7 +41,7 @@ func createReservationTable(db *sql.DB) {
 		id BIGSERIAL PRIMARY KEY,
 		first_name VARCHAR(50) NOT NULL,
 		last_name VARCHAR(50) NOT NULL,
-		email VARCHAR(150) NOT NULL,
+		email VARCHAR(150) NOT NULL UNIQUE,
 		national_id INTEGER NOT NULL,
 		ticket_count INTEGER NOT NULL,
 		uuid UUID NOT NULL
