@@ -7,8 +7,8 @@ server:
   host: localhost
 
 database:
-  host
-  port
-  user
-  password
-  name
+  host: db
+  port: 5432
+  user: postgres
+  password: mypassword
+  name: mydb
