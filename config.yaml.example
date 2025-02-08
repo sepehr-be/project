@@ -1,0 +1,14 @@
+app:
+  name: golangApi
+  version: 1.0.0
+
+server:
+  port: 4000
+  host: localhost
+
+database:
+  host
+  port
+  user
+  password
+  name
