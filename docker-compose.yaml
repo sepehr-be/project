@@ -2,15 +2,15 @@ version: '3.9'
 
 services:
   db:
-    image: postgres:17-alpine
+    image: postgres:17.2-alpine
     container_name: postgres_container
     restart: always
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: mypassword
       POSTGRES_DB: mydb
-    valumes:
-    - pg_data:/var/lib/postgres/data
+    volumes:
+    - pg_data:/var/lib/postgresql/data
     ports:
     - "1000:5432"
   api:
@@ -20,10 +20,9 @@ services:
     container_name: golang_api
     depends_on:
       - db
-    valumes:
+    volumes:
       - ./config.yaml:/app/config.yaml
     ports:
       - "4000:4000"
-
-valumes:
+volumes:
   pg_data:
